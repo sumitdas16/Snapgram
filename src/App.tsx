@@ -5,6 +5,7 @@ import SigninForm from "./auth/forms/SigninForm";
 import SignupForm from "./auth/forms/SignupForm";
 import RootLayout from "./root/RootLayout";
 import { Home } from "./root/pages";
+import { Toaster } from "@/components/ui/toaster"
 
 
 
@@ -26,6 +27,7 @@ const App = () => {
         </Route>
         
       </Routes>
+      <Toaster/>
     </main>
   );
 };

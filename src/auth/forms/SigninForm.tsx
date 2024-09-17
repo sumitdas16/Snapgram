@@ -2,7 +2,7 @@ import React from 'react'
 
 const SigninForm = () => {
   return (
-    <div>
+    <div className='to-blue-800'>
       SignIn
     </div>
   )

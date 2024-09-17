@@ -1,6 +1,7 @@
 import { INewUser } from "@/types";
-import { account } from "./config.ts";
-import { ID } from "appwrite";
+import { account, appwriteConfig, avatars, databases } from "./config.ts";
+import { ID, Query } from "appwrite";
+
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -11,12 +12,78 @@ export async function createUserAccount(user: INewUser) {
       user.name
     );
 
-    if (!newAccount) {
-        console.log("Unable to create Account");
-    }
-    return newAccount;
+    if (!newAccount) throw Error;
+
+    const avatarUrl = avatars.getInitials(user.name);
+
+    const newUser = await saveUserinDB({
+      accountId : newAccount.$id,
+      name : newAccount.name,
+      email: newAccount.email,
+      username: user.username,
+      imageUrl: avatarUrl,
+    })
+    return newUser;
   } catch (error) {
     console.log(error);
     return error;
+  }
+}
+
+export async function saveUserinDB(user:{
+  accountId : string,
+  name : string,
+  email : string,
+  imageUrl?: URL,
+  username? : string
+}) {
+  try {
+    const newUser = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      ID.unique(),
+      user
+    )
+
+    return newUser;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function signInAccount(user :{email : string , password : string}) {
+  try {
+    
+    const session = account.createEmailPasswordSession(user.email, user.password);
+
+    return session;
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+export async function getCurrentuser() {
+  try {
+    const currentAccount = await account.get();
+    if (!currentAccount) {
+      throw Error;
+    }
+
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.equal('accountId', currentAccount.$id)]
+    )
+
+    if (!currentUser) {
+      throw Error;
+    }
+
+    return currentUser.documents[0];
+
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }
