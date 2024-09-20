@@ -52,13 +52,13 @@ export async function saveUserinDB(user: {
 }
 
 export async function signInAccount(user: { email: string; password: string }) {
-  console.log("We are here");
   try {
-      await account.deleteSession('current');
-      const session = await account.createEmailPasswordSession(user.email, user.password);
-      console.log(session);
-
-      return session;
+    const session = await account.createEmailPasswordSession(
+      user.email,
+      user.password
+    );
+    console.log(session);
+    return session;
   } catch (error) {
     console.log(error);
   }
@@ -85,5 +85,15 @@ export async function getCurrentuser() {
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+export async function signOutAccount() {
+  try {
+    const session = await account.deleteSession('current');
+
+    return session;
+  } catch (error) {
+    console.log(error);
   }
 }

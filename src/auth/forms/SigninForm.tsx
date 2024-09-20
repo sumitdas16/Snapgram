@@ -36,7 +36,6 @@ const SigninForm = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SigninValidation>) {
-    console.log("onsubmit");
     
     const session =  await signInAccount({
       email : values.email,
@@ -49,7 +48,6 @@ const SigninForm = () => {
     }
 
     const isLoggedIn = await checkAuthUser();
-    console.log(isLoggedIn);
     
     if (isLoggedIn) {
       form.reset();
