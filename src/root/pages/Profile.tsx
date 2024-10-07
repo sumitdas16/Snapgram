@@ -9,12 +9,9 @@ import {
   Route,
   Routes,
   Link,
-  Outlet,
   useParams,
   useLocation,
 } from "react-router-dom";
-import PostCard from "@/components/shared/PostCard";
-import { Models } from "appwrite";
 import LikedPosts from "./LikedPost";
 
 interface StabBlockProps {

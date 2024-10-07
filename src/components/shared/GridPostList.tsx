@@ -22,12 +22,12 @@ const GridPostList = ({posts, showUser = true , showStats = true }: GridPostList
             <img src={post.imageUrl} alt="post" className='h-full w-full object-cover'/>
           </Link>
 
-
+          
           <div className="grid-post_user">
             {showUser && (
               <div className="flex items-center justify-start gap-2">
                 <img className='h-8 w-8 rounded-full' src={post.creator.imageUrl} alt="creator" />
-                <Link to={`/profile/${user.id}`}><p className='line-clamp-1'>{post.creator.name}</p></Link>
+                <Link to={`/profile/${post.creator.$id}`}><p className='line-clamp-1'>{post.creator.name}</p></Link>
               </div>
             )}
 
