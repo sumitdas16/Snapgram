@@ -28,7 +28,7 @@ Snapgram is a full-stack social media web application that allows users to creat
 ```bash
    npm install
 ```
-## Configure Appwrite:
+3. Configure Appwrite:
 
 Set up Appwrite locally or on a remote server.
 Create a new project and configure your database, authentication, and storage settings.
